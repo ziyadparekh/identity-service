@@ -11,10 +11,13 @@ router.get('/item/:item_id', function (req, res) {
 });
 
 // Create New Item
-router.post('/item', function (req, res) {
+router.post('/item/create', function (req, res) {
     var item = new Item();
-    item.parse(req.body.item);
-    res.json({ "item": item.toJSON() });
+    item.setNewValues(req.body.item);
+    item.createNewItem(function (err, result) {
+        if (err) return res.status(403).send("fucked up").end();
+        return res.status(200).json({ "item": item.toJSON() }).end();
+    });
 });
 
 // Update Item By ID

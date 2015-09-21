@@ -1,11 +1,13 @@
+"use strict";
+
 var mysql = require('mysql');
 
 var pool = mysql.createPool({
     host     : "localhost",
-    user     : "your-username",
-    password : "your-password",
+    user     : "root",
+    password : "",
     port     : 3306,
-    database : "your-db-name",
+    database : "closet_co",
     charset: "UTF8MB4_GENERAL_CI",
     connectionLimit: 10,
     waitForConnections: true,
@@ -73,5 +75,4 @@ exports.query = function(query, params, done, next) {
             done(null, results);
         }
     });
-
 }
