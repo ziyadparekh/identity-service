@@ -28,5 +28,21 @@ Item.prototype.createNewItem = function (done, next) {
     }, next);
 };
 
+Item.prototype.fetchItem = function (id, done, next) {
+    if (!id || !_.isNumber(id)) return done("ID must be number", null);
+    var post = {};
+    connection.query("SELECT * FROM closet_items WHERE id = ?", id, function (err, rows) {
+        if (err) return done(err, null);
+        _.each(rows[0], function (val, key) {
+            try {
+                post[key] = JSON.parse(val);
+            } catch (e) {
+                post[key] = val;
+            }
+        });
+        return done(null, post);
+    }, next);
+};
+
 
 module.exports = Item;

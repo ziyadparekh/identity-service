@@ -6,8 +6,13 @@ var express = require('express'),
 
 // Get Item By ID
 router.get('/item/:item_id', function (req, res) {
-    console.log("Get Item " + req.params.id);
-    res.json({"message": "GET ITEM " + req.params.item_id + " success"});
+    console.log("Get Item " + req.params.item_id);
+    var item_id = Number(req.params.item_id);
+    var item = new Item();
+    item.fetchItem(item_id, function (err, post) {
+        if (err) return res.status(403).send(err).end();
+        return res.json(post);
+    });
 });
 
 // Create New Item
@@ -15,7 +20,7 @@ router.post('/item/create', function (req, res) {
     var item = new Item();
     item.setNewValues(req.body.item);
     item.createNewItem(function (err, result) {
-        if (err) return res.status(403).send("fucked up").end();
+        if (err) return res.status(403).send(err).end();
         return res.status(200).json({ "item": item.toJSON() }).end();
     });
 });
