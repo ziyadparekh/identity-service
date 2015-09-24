@@ -2,6 +2,7 @@
 
 var express = require('express'),
     Item = require('../src/Item'),
+    middleware = require("../middleware/middleware"),
     router = express.Router();
 
 // Get Item By ID
@@ -16,14 +17,7 @@ router.get('/item/:item_id', function (req, res) {
 });
 
 // Create New Item
-router.post('/item/create', function (req, res) {
-    var item = new Item();
-    item.setNewValues(req.body.item);
-    item.createNewItem(function (err, result) {
-        if (err) return res.status(403).send(err).end();
-        return res.status(200).json({ "item": item.toJSON() }).end();
-    });
-});
+router.post('/item/create', middleware.validateToken, Item.createNewItem);
 
 // Update Item By ID
 router.put('/item/:item_id', function (req, res) {
