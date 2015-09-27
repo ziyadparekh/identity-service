@@ -2,8 +2,20 @@
 
 var express = require('express'),
     Item = require('../src/Item'),
+    User = require('../src/User'),
     middleware = require("../middleware/middleware"),
     router = express.Router();
+
+
+
+router.post('/user/signup', User.registerNewUser);
+
+router.post('/user/login', User.loginUser);
+
+router.get('/user/verify', User.getUserByToken);
+
+router.get('/user/:user_id', User.getUserById);
+
 
 // Get Item By ID
 router.get('/item/:item_id', function (req, res) {

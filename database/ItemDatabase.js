@@ -1,4 +1,5 @@
 "use strict";
+
 var connection = require("../helpers/connection"),
     mkDeffered = require("../helpers/deferred"),
     queries = require("../helpers/queries"),

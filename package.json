@@ -13,6 +13,7 @@
     "body-parser": "^1.14.0",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
+    "moment": "^2.10.6",
     "morgan": "^1.6.1",
     "multer": "^1.0.3",
     "mysql": "^2.9.0",
