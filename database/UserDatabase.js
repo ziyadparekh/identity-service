@@ -45,8 +45,8 @@ UserDatabase.getUserById = function (row_id) {
 UserDatabase.getUserByEmail = function (email) {
   var def = mkDeffered();
   connection.query(queries.getUserByEmail(), email, function (err, rows) {
-    if (err) {
-      def.reject(err);
+    if (err || !rows.length) {
+      def.reject({"message" : "user not found"});
     } else {
       def.resolve(rows[0]);
     }

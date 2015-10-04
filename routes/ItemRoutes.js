@@ -8,13 +8,15 @@ var express = require('express'),
 
 
 
-router.post('/user/signup', User.registerNewUser);
+router.post('/user/signup',middleware.validateNewUserRequest, User.registerNewUser);
 
-router.post('/user/login', User.loginUser);
+router.post('/user/login', middleware.validateLoginRequest, User.loginUser);
 
-router.get('/user/verify', User.getUserByToken);
+router.put('/user/:user_id', middleware.validateUserId, User.updateUser);
 
-router.get('/user/:user_id', User.getUserById);
+router.get('/user/verify', middleware.validateTokenRequest, User.getUserByToken);
+
+router.get('/user/:user_id', middleware.validateUserId, User.getUserById);
 
 
 // Get Item By ID

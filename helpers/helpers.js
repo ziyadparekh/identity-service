@@ -111,12 +111,23 @@ var authorizeUser = function (user, password) {
   return def.getPromise();
 };
 
+var _cleanUpUser = function (user, full) {
+  delete user.user_hashed;
+  if (full)
+    delete user.user_token;
+  for (var i in user) {
+    if (user.hasOwnProperty(i)) {
+      if (_.isNull(user[i]) || _.isUndefined(user[i])) {
+        delete user[i];
+      }
+    }
+  }
+  return user;
+};
+
 var safeUserResponse = function (user) {
   var def = mkDeferred();
-
-  delete user.user_hashed;
-  delete user.user_token;
-
+  user = _cleanUpUser(user);
   def.resolve(user);
 
   return def.getPromise();
